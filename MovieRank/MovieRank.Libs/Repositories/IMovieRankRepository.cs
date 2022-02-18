@@ -8,7 +8,8 @@ namespace MovieRank.Libs.Repositories
     {
         Task<IEnumerable<MovieDb>> GetAllItems();
         Task<MovieDb> GetMovie(int userId, string movieName);
-        Task<IEnumerable<MovieDb>> getUsersRankedMoviesByMovieTitle(int userId, string movieName);
-        Task addMovie(MovieDb movieDb);
+        Task<IEnumerable<MovieDb>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName);
+        Task AddMovie(MovieDb movieDb);
+        Task UpdateMovie(MovieDb movieDb);
     }
 }

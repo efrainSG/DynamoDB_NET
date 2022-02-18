@@ -15,7 +15,7 @@ namespace MovieRank.Libs.Repositories
             context = new DynamoDBContext(dynamoDbClinet);
         }
 
-        public async Task addMovie(MovieDb movieDb)
+        public async Task AddMovie(MovieDb movieDb)
         {
             await context.SaveAsync(movieDb);
         }
@@ -30,7 +30,7 @@ namespace MovieRank.Libs.Repositories
             return await context.LoadAsync<MovieDb>(userId, movieName);
         }
 
-        public async Task<IEnumerable<MovieDb>> getUsersRankedMoviesByMovieTitle(int userId, string movieName)
+        public async Task<IEnumerable<MovieDb>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName)
         {
             var config = new DynamoDBOperationConfig
             {
@@ -41,6 +41,11 @@ namespace MovieRank.Libs.Repositories
             };
 
             return await context.QueryAsync<MovieDb>(userId, config).GetRemainingAsync();
+        }
+
+        public async Task UpdateMovie(MovieDb movieDb)
+        {
+            await context.SaveAsync(movieDb);
         }
     }
 }

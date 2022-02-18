@@ -17,10 +17,10 @@ namespace MovieRank.Services
             this.map = map;
         }
 
-        public async Task addMovie(int userId, MovieRankRequest movieRankRequest)
+        public async Task AddMovie(int userId, MovieRankRequest movieRankRequest)
         {
             var movieDb = map.ToMovieDBModel(userId, movieRankRequest);
-            await repository.addMovie(movieDb);
+            await repository.AddMovie(movieDb);
         }
 
         public async Task<IEnumerable<MovieResponse>> GetAllItemsFromDatabase()
@@ -36,10 +36,18 @@ namespace MovieRank.Services
             return map.ToMovieContract(response);
         }
 
-        public async Task<IEnumerable<MovieResponse>> getUsersRankedMoviesByMovieTitle(int userId, string movieName)
+        public async Task<IEnumerable<MovieResponse>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName)
         {
-            var response = await repository.getUsersRankedMoviesByMovieTitle(userId, movieName);
+            var response = await repository.GetUsersRankedMoviesByMovieTitle(userId, movieName);
             return map.ToMovieContract(response);
+        }
+
+        public async Task UpdateMovie(int userId, MovieUpdateRequest movieUpdateRequest)
+        {
+            var response = await repository.GetMovie(userId, movieUpdateRequest.movieName);
+
+            var movieDb = map.ToMovieDBModel(userId, response, movieUpdateRequest);
+            await repository.UpdateMovie(movieDb);
         }
     }
 }
