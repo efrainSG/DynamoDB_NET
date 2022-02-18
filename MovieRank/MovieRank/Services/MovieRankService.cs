@@ -22,7 +22,13 @@ namespace MovieRank.Services
         {
             var response = await repository.GetAllItems();
 
-            return map.MovieContract(response);
+            return map.ToMovieContract(response);
+        }
+
+        public async Task<MovieResponse> GetMovie(int userId, string movieName)
+        {
+            var response = await repository.GetMovie(userId, movieName);
+            return map.ToMovieContract(response);
         }
     }
 }

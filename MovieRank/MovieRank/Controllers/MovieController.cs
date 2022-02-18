@@ -20,8 +20,14 @@ namespace MovieRank.Controllers
         public async Task<IEnumerable<MovieResponse>> getAllItemsFromDatabase()
         {
             var results = await movieRankService.GetAllItemsFromDatabase();
-
             return results;
+        }
+
+        [HttpGet, Route("{userId}/{movieName}")]
+        public async Task<MovieResponse> getMovie(int userId, string movieName)
+        {
+            var result = await movieRankService.GetMovie(userId, movieName);
+            return result;
         }
     }
 }
