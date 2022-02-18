@@ -1,0 +1,9 @@
+﻿################################################################################
+# Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
+################################################################################
+
+/MovieRank/.vs/MovieRank/v16/TestStore/0
+/MovieRank/MovieRank/obj/Debug/netcoreapp3.1
+/MovieRank/MovieRank.Contracts/obj/Debug/netcoreapp3.1
+/MovieRank/MovieRank.Libs/obj/Debug/netcoreapp3.1
+/MovieRank/.vs/MovieRank/config/applicationhost.config
