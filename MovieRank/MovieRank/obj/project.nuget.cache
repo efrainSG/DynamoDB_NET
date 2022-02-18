@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "6pYOjtuprTJ+MZDU3D3qf9IXjDWaUVBNwJ0+jrsfCxQ4YaVGxT3FrtBepb61POPyjQs2AwoF1koc33Q94zG0vQ==",
+  "success": true,
+  "projectFilePath": "C:\\Repos\\DynamoDB_NET\\MovieRank\\MovieRank\\MovieRank.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\efrai\\.nuget\\packages\\awssdk.core\\3.7.7.1\\awssdk.core.3.7.7.1.nupkg.sha512",
+    "C:\\Users\\efrai\\.nuget\\packages\\awssdk.dynamodbv2\\3.7.2.20\\awssdk.dynamodbv2.3.7.2.20.nupkg.sha512",
+    "C:\\Users\\efrai\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.1\\awssdk.extensions.netcore.setup.3.7.1.nupkg.sha512",
+    "C:\\Users\\efrai\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\2.0.0\\microsoft.extensions.configuration.abstractions.2.0.0.nupkg.sha512",
+    "C:\\Users\\efrai\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\2.0.0\\microsoft.extensions.dependencyinjection.abstractions.2.0.0.nupkg.sha512",
+    "C:\\Users\\efrai\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\2.0.0\\microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512",
+    "C:\\Users\\efrai\\.nuget\\packages\\microsoft.extensions.primitives\\2.0.0\\microsoft.extensions.primitives.2.0.0.nupkg.sha512",
+    "C:\\Users\\efrai\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.4.0\\system.runtime.compilerservices.unsafe.4.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}

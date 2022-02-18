@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "9vjmkNx+xXj7Q+MHi6ZuoqHBLx3kB3FzvHrMfWnkDVs/I15tm5vM1EzXk4WQRs/gEESZi30QB5gj+SVvTFsIag==",
+  "success": true,
+  "projectFilePath": "C:\\Repos\\DynamoDB_NET\\MovieRank\\MovieRank.Libs\\MovieRank.Libs.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\efrai\\.nuget\\packages\\awssdk.core\\3.7.7.1\\awssdk.core.3.7.7.1.nupkg.sha512",
+    "C:\\Users\\efrai\\.nuget\\packages\\awssdk.dynamodbv2\\3.7.2.20\\awssdk.dynamodbv2.3.7.2.20.nupkg.sha512"
+  ],
+  "logs": []
+}
