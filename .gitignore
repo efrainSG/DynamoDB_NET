@@ -41,3 +41,4 @@
 /MovieRank/MovieRank/bin/Debug/netcoreapp3.1/AWSSDK.DynamoDBv2.dll
 /MovieRank/MovieRank/bin/Debug/netcoreapp3.1/AWSSDK.Core.dll
 /MovieRank/MovieRank/bin/Debug/netcoreapp3.1/appsettings.json
+/MovieRank/MovieRank/bin/Debug/netcoreapp3.1/appsettings.Development.json

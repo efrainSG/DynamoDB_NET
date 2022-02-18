@@ -24,5 +24,18 @@ namespace MovieRank.Libs.Repositories
         {
             return await context.LoadAsync<MovieDb>(userId, movieName);
         }
+
+        public async Task<IEnumerable<MovieDb>> getUsersRankedMoviesByMovieTitle(int userId, string movieName)
+        {
+            var config = new DynamoDBOperationConfig
+            {
+                QueryFilter = new List<ScanCondition>
+                {
+                    new ScanCondition("MovieName", Amazon.DynamoDBv2.DocumentModel.ScanOperator.BeginsWith, movieName)
+                }
+            };
+
+            return await context.QueryAsync<MovieDb>(userId, config).GetRemainingAsync();
+        }
     }
 }

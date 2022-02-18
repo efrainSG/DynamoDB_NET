@@ -29,5 +29,12 @@ namespace MovieRank.Controllers
             var result = await movieRankService.GetMovie(userId, movieName);
             return result;
         }
+
+        [HttpGet, Route("user/{userId}/rankedMovies/{movieName}")]
+        public async Task<IEnumerable<MovieResponse>> getUsersRankedMoviesByMovieTitle(int userId, string movieName)
+        {
+            var result = await movieRankService.getUsersRankedMoviesByMovieTitle(userId, movieName);
+            return result;
+        }
     }
 }
