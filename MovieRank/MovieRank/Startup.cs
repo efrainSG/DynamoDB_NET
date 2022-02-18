@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MovieRank.Libs.Mappers;
+using MovieRank.Libs.Repositories;
+using MovieRank.Services;
 
 namespace MovieRank
 {
@@ -22,6 +25,10 @@ namespace MovieRank
         {
             services.AddControllers();
             services.AddAWSService<IAmazonDynamoDB>();
+            services.AddSingleton<IMovieRankService, MovieRankService>();
+            services.AddSingleton<IMovieRankRepository, MovieRankRepository>();
+            services.AddSingleton<IMapper, Mapper>();
+
             services.AddDefaultAWSOptions(
                 new AWSOptions
                 {

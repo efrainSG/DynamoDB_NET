@@ -9,4 +9,9 @@
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MovieRank.Contracts\MovieRank.Contracts.csproj" />
+    <ProjectReference Include="..\MovieRank.Libs\MovieRank.Libs.csproj" />
+  </ItemGroup>
+
 </Project>
