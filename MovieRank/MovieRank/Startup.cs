@@ -1,3 +1,5 @@
+using Amazon.DynamoDBv2;
+using Amazon.Extensions.NETCore.Setup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +21,13 @@ namespace MovieRank
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddAWSService<IAmazonDynamoDB>();
+            services.AddDefaultAWSOptions(
+                new AWSOptions
+                {
+                    Region = Amazon.RegionEndpoint.GetBySystemName("us-east-2")
+                }
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
