@@ -9,5 +9,6 @@ namespace MovieRank.Services
         Task<IEnumerable<MovieResponse>> GetAllItemsFromDatabase();
         Task<MovieResponse> GetMovie(int userId, string movieName);
         Task<IEnumerable<MovieResponse>> getUsersRankedMoviesByMovieTitle(int userId, string movieName);
+        Task addMovie(int userId, MovieRankRequest movieRankRequest);
     }
 }

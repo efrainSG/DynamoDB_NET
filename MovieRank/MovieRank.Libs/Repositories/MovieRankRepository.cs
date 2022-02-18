@@ -15,6 +15,11 @@ namespace MovieRank.Libs.Repositories
             context = new DynamoDBContext(dynamoDbClinet);
         }
 
+        public async Task addMovie(MovieDb movieDb)
+        {
+            await context.SaveAsync(movieDb);
+        }
+
         public async Task<IEnumerable<MovieDb>> GetAllItems()
         {
             return await context.ScanAsync<MovieDb>(new List<ScanCondition>()).GetRemainingAsync(); //expensive on cost

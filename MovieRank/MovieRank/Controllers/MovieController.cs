@@ -36,5 +36,13 @@ namespace MovieRank.Controllers
             var result = await movieRankService.getUsersRankedMoviesByMovieTitle(userId, movieName);
             return result;
         }
+
+        [HttpPost, Route("{userId}")]
+        public async Task<IActionResult> addMovie(int userId, [FromBody] MovieRankRequest movieRankRequest)
+        {
+            await movieRankService.addMovie(userId, movieRankRequest);
+
+            return Ok();
+        }
     }
 }

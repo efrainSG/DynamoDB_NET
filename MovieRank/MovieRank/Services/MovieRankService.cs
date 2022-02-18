@@ -17,6 +17,11 @@ namespace MovieRank.Services
             this.map = map;
         }
 
+        public async Task addMovie(int userId, MovieRankRequest movieRankRequest)
+        {
+            var movieDb = map.ToMovieDBModel(userId, movieRankRequest);
+            await repository.addMovie(movieDb);
+        }
 
         public async Task<IEnumerable<MovieResponse>> GetAllItemsFromDatabase()
         {

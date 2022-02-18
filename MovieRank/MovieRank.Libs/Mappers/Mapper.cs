@@ -1,5 +1,6 @@
 ﻿using MovieRank.Contracts;
 using MovieRank.Libs.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,6 +21,19 @@ namespace MovieRank.Libs.Mappers
                 Description = movie.Description,
                 Ranking = movie.Ranking,
                 TimeRanked = movie.RankDateTime
+            };
+        }
+
+        public MovieDb ToMovieDBModel(int userId, MovieRankRequest movieRankRequest)
+        {
+            return new MovieDb
+            {
+                Actors = movieRankRequest.Actors,
+                Description = movieRankRequest.Description,
+                MovieName = movieRankRequest.movieName,
+                UserId = userId,
+                Ranking = movieRankRequest.Ranking,
+                RankDateTime = DateTime.UtcNow.ToString()
             };
         }
     }
