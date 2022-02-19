@@ -51,5 +51,13 @@ namespace MovieRank.Controllers
             await movieRankService.UpdateMovie(userId, movieUpdateRequest);
             return Ok();
         }
+
+        [HttpGet, Route("{movieName}/ranking")]
+        public async Task<MovieRankResponse> GetMoviesRanking(string movieName)
+        {
+            var result = await movieRankService.GetMoviesRanking(movieName);
+
+            return result;
+        }
     }
 }
