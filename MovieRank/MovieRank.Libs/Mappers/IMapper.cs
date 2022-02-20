@@ -1,14 +1,14 @@
-﻿using MovieRank.Contracts;
-using MovieRank.Libs.Models;
+﻿using Amazon.DynamoDBv2.DocumentModel;
+using MovieRank.Contracts;
 using System.Collections.Generic;
 
 namespace MovieRank.Libs.Mappers
 {
     public interface IMapper
     {
-        IEnumerable<MovieResponse> ToMovieContract(IEnumerable<MovieDb> items);
-        MovieResponse ToMovieContract(MovieDb movie);
-        MovieDb ToMovieDBModel(int userId, MovieRankRequest movieRankRequest);
-        MovieDb ToMovieDBModel(int userId, MovieDb movieRankRequest, MovieUpdateRequest movieUpdateRequest);
+        IEnumerable<MovieResponse> ToMovieContract(IEnumerable<Document> items);
+        MovieResponse ToMovieContract(Document item);
+        Document ToDocumentModel(int userId, MovieRankRequest movieRankRequest);
+        Document ToDocumentModel(int userId, MovieResponse movieResponse, MovieUpdateRequest movieRankRequest);
     }
 }

@@ -1,4 +1,4 @@
-﻿using MovieRank.Libs.Models;
+﻿using Amazon.DynamoDBv2.DocumentModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,11 +6,11 @@ namespace MovieRank.Libs.Repositories
 {
     public interface IMovieRankRepository
     {
-        Task<IEnumerable<MovieDb>> GetAllItems();
-        Task<MovieDb> GetMovie(int userId, string movieName);
-        Task<IEnumerable<MovieDb>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName);
-        Task AddMovie(MovieDb movieDb);
-        Task UpdateMovie(MovieDb movieDb);
-        Task<IEnumerable<MovieDb>> GetMoviesRanking(string movieName);
+        Task<IEnumerable<Document>> GetAllItems();
+        Task<Document> GetMovie(int userId, string movieName);
+        Task<IEnumerable<Document>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName);
+        Task AddMovie(Document documentModel);
+        Task UpdateMovie(Document documentModel);
+        Task<IEnumerable<Document>> GetMoviesRanking(string movieName);
     }
 }

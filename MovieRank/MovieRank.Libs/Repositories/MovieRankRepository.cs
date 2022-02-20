@@ -1,6 +1,5 @@
 ﻿using Amazon.DynamoDBv2;
-using Amazon.DynamoDBv2.DataModel;
-using MovieRank.Libs.Models;
+using Amazon.DynamoDBv2.DocumentModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,54 +7,53 @@ namespace MovieRank.Libs.Repositories
 {
     public class MovieRankRepository : IMovieRankRepository
     {
-        private readonly DynamoDBContext context;
+        private const string TableName = "MovieRanking001";
+        private readonly Table table;
 
-        public MovieRankRepository(IAmazonDynamoDB dynamoDbClinet)
+        public MovieRankRepository(IAmazonDynamoDB dynamoDbClient)
         {
-            context = new DynamoDBContext(dynamoDbClinet);
+            table = Table.LoadTable(dynamoDbClient, TableName);
         }
 
-        public async Task AddMovie(MovieDb movieDb)
+        public async Task AddMovie(Document documentModel)
         {
-            await context.SaveAsync(movieDb);
+            await table.PutItemAsync(documentModel);
         }
 
-        public async Task<IEnumerable<MovieDb>> GetAllItems()
+        public async Task<IEnumerable<Document>> GetAllItems()
         {
-            return await context.ScanAsync<MovieDb>(new List<ScanCondition>()).GetRemainingAsync(); //expensive on cost
+            var config = new ScanOperationConfig();
+
+            return await table.Scan(config).GetRemainingAsync();
         }
 
-        public async Task<MovieDb> GetMovie(int userId, string movieName)
+        public async Task<Document> GetMovie(int userId, string movieName)
         {
-            return await context.LoadAsync<MovieDb>(userId, movieName);
+            return await table.GetItemAsync(userId, movieName);
         }
 
-        public async Task<IEnumerable<MovieDb>> GetMoviesRanking(string movieName)
+        public async Task<IEnumerable<Document>> GetMoviesRanking(string movieName)
         {
-            var config = new DynamoDBOperationConfig
+            var filter = new QueryFilter("MovieName", QueryOperator.Equal, movieName);
+            var config = new QueryOperationConfig()
             {
-                IndexName = "MovieName-index"
+                IndexName = "MovieName-index",
+                Filter = filter
             };
-
-            return await context.QueryAsync<MovieDb>(movieName, config).GetRemainingAsync();
+            return await table.Query(config).GetRemainingAsync();
         }
 
-        public async Task<IEnumerable<MovieDb>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName)
+        public async Task<IEnumerable<Document>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName)
         {
-            var config = new DynamoDBOperationConfig
-            {
-                QueryFilter = new List<ScanCondition>
-                {
-                    new ScanCondition("MovieName", Amazon.DynamoDBv2.DocumentModel.ScanOperator.BeginsWith, movieName)
-                }
-            };
+            var filter = new QueryFilter("UserId", QueryOperator.Equal, userId);
+            filter.AddCondition("MovieName", QueryOperator.BeginsWith, movieName);
 
-            return await context.QueryAsync<MovieDb>(userId, config).GetRemainingAsync();
+            return await table.Query(filter).GetRemainingAsync();
         }
 
-        public async Task UpdateMovie(MovieDb movieDb)
+        public async Task UpdateMovie(Document documentModel)
         {
-            await context.SaveAsync(movieDb);
+            await table.UpdateItemAsync(documentModel);
         }
     }
 }
