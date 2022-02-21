@@ -1,5 +1,7 @@
 ﻿using Amazon.DynamoDBv2.DocumentModel;
+using Amazon.DynamoDBv2.Model;
 using MovieRank.Contracts;
+using MovieRank.Libs.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,67 +10,37 @@ namespace MovieRank.Libs.Mappers
 {
     public class Mapper : IMapper
     {
-        public Document ToDocumentModel(int userId, MovieRankRequest movieRankRequest)
+        public IEnumerable<MovieResponse> ToMovieContract(ScanResponse response)
         {
-            return new Document
-            {
-                ["UserId"] = userId,
-                ["MovieName"] = movieRankRequest.movieName,
-                ["Description"] = movieRankRequest.Description,
-                ["RankDateTime"] = DateTime.UtcNow.ToString(),
-                ["Actors"] = movieRankRequest.Actors,
-                ["Ranking"] = movieRankRequest.Ranking
-            };
+            return response.Items.Select(ToMovieContract);
         }
 
-        public Document ToDocumentModel(int userId, MovieResponse movieResponse, MovieUpdateRequest movieRankRequest)
+        public MovieResponse ToMovieContract(GetItemResponse response)
         {
-            return new Document
-            {
-                ["UserId"] = userId,
-                ["MovieName"] = movieResponse.MovieName,
-                ["Description"] = movieResponse.Description,
-                ["RankDateTime"] = DateTime.UtcNow.ToString(),
-                ["Actors"] = movieResponse.Actors,
-                ["Ranking"] = movieRankRequest.Ranking
-            };
-        }
-
-        public IEnumerable<MovieResponse> ToMovieContract(IEnumerable<Document> items)
-        {
-            return items.Select(ToMovieContract);
-        }
-
-        public MovieResponse ToMovieContract(Document item)
-        {
-            string description = string.Empty;
-            try
-            {
-                description = item["Description"];
-            }
-            catch
-            {
-                description = string.Empty;
-            }
-
-
-            string RankDateTime = string.Empty;
-            try
-            {
-                RankDateTime = item["RankDateTime"];
-            }
-            catch
-            {
-                RankDateTime = string.Empty;
-            }
-
             return new MovieResponse
             {
-                MovieName = item["MovieName"],
-                Description = description,
-                Actors = item["Actors"].AsListOfString(),
-                Ranking = Convert.ToInt32(item["Ranking"]),
-                TimeRanked = RankDateTime
+                MovieName = response.Item[Constants.MovieName_field].S,
+                Description = response.Item[Constants.Description_field].S,
+                Actors = response.Item[Constants.Actors_field].SS,
+                Ranking = Convert.ToInt32(response.Item[Constants.Ranking_field].N),
+                TimeRanked = response.Item[Constants.RankDateTime_field].S
+            };
+        }
+
+        public IEnumerable<MovieResponse> ToMovieContract(QueryResponse response)
+        {
+            return response.Items.Select(ToMovieContract);
+        }
+
+        private MovieResponse ToMovieContract(Dictionary<string, AttributeValue> item)
+        {
+            return new MovieResponse
+            {
+                MovieName = item[Constants.MovieName_field].S,
+                Description = item[Constants.Description_field].S,
+                Actors = item[Constants.Actors_field].SS,
+                Ranking = Convert.ToInt32(item[Constants.Ranking_field].N),
+                TimeRanked = item[Constants.RankDateTime_field].S
             };
         }
     }

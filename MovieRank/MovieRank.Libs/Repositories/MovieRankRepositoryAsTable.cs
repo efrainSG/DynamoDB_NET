@@ -34,7 +34,7 @@ namespace MovieRank.Libs.Repositories
         {
             var config = new DynamoDBOperationConfig
             {
-                IndexName = "MovieName-index"
+                IndexName = Constants.TableIndex
             };
 
             return await context.QueryAsync<MovieDb>(movieName, config).GetRemainingAsync();
@@ -46,7 +46,7 @@ namespace MovieRank.Libs.Repositories
             {
                 QueryFilter = new List<ScanCondition>
                 {
-                    new ScanCondition("MovieName", Amazon.DynamoDBv2.DocumentModel.ScanOperator.BeginsWith, movieName)
+                    new ScanCondition(Constants.MovieName_field, Amazon.DynamoDBv2.DocumentModel.ScanOperator.BeginsWith, movieName)
                 }
             };
 

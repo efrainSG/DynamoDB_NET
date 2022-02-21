@@ -19,12 +19,6 @@ namespace MovieRank.Services
             this.map = map;
         }
 
-        public async Task AddMovie(int userId, MovieRankRequest movieRankRequest)
-        {
-            var movieDb = map.ToDocumentModel(userId, movieRankRequest);
-            await repository.AddMovie(movieDb);
-        }
-
         public async Task<IEnumerable<MovieResponse>> GetAllItemsFromDatabase()
         {
             var response = await repository.GetAllItems();
@@ -41,7 +35,7 @@ namespace MovieRank.Services
         public async Task<MovieRankResponse> GetMoviesRanking(string movieName)
         {
             var response = await repository.GetMoviesRanking(movieName);
-            var overallMovieRanking = Math.Round(response.Select(x => x["Ranking"].AsInt()).Average());
+            var overallMovieRanking = Math.Round(response.Items.Select(x => Convert.ToInt32(x["Ranking"].N)).Average());
             return new MovieRankResponse
             {
                 MovieName = movieName,
@@ -55,12 +49,16 @@ namespace MovieRank.Services
             return map.ToMovieContract(response);
         }
 
+        public async Task AddMovie(int userId, MovieRankRequest movieRankRequest)
+        {
+            await repository.AddMovie(userId, movieRankRequest);
+        }
+
         public async Task UpdateMovie(int userId, MovieUpdateRequest movieUpdateRequest)
         {
-            var response = await GetMovie(userId, movieUpdateRequest.movieName);
-
-            var movieDb = map.ToDocumentModel(userId, response, movieUpdateRequest);
-            await repository.UpdateMovie(movieDb);
+            await repository.UpdateMovie(userId, movieUpdateRequest);
         }
+
+
     }
 }

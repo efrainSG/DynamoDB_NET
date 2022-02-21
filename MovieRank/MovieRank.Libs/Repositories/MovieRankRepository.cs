@@ -1,5 +1,9 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DocumentModel;
+using Amazon.DynamoDBv2.Model;
+using MovieRank.Contracts;
+using MovieRank.Libs.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,53 +11,111 @@ namespace MovieRank.Libs.Repositories
 {
     public class MovieRankRepository : IMovieRankRepository
     {
-        private const string TableName = "MovieRanking001";
-        private readonly Table table;
+        private readonly IAmazonDynamoDB dynamoDBClient;
 
-        public MovieRankRepository(IAmazonDynamoDB dynamoDbClient)
+        public MovieRankRepository(IAmazonDynamoDB dynamoDBClient)
         {
-            table = Table.LoadTable(dynamoDbClient, TableName);
+            this.dynamoDBClient = dynamoDBClient;
         }
 
-        public async Task AddMovie(Document documentModel)
+        public async Task<ScanResponse> GetAllItems()
         {
-            await table.PutItemAsync(documentModel);
+            var scanRequest = new ScanRequest(Models.Constants.TableName);
+            return await dynamoDBClient.ScanAsync(scanRequest);
         }
 
-        public async Task<IEnumerable<Document>> GetAllItems()
+        public async Task<GetItemResponse> GetMovie(int userId, string movieName)
         {
-            var config = new ScanOperationConfig();
-
-            return await table.Scan(config).GetRemainingAsync();
-        }
-
-        public async Task<Document> GetMovie(int userId, string movieName)
-        {
-            return await table.GetItemAsync(userId, movieName);
-        }
-
-        public async Task<IEnumerable<Document>> GetMoviesRanking(string movieName)
-        {
-            var filter = new QueryFilter("MovieName", QueryOperator.Equal, movieName);
-            var config = new QueryOperationConfig()
+            var request = new GetItemRequest
             {
-                IndexName = "MovieName-index",
-                Filter = filter
+                TableName = Constants.TableName,
+                Key = new Dictionary<string, AttributeValue>
+                {
+                    {Constants.UserId_field, new AttributeValue {N = userId.ToString() } },
+                    {Constants.MovieName_field, new AttributeValue{S = movieName} }
+                }
             };
-            return await table.Query(config).GetRemainingAsync();
+
+            return await dynamoDBClient.GetItemAsync(request);
         }
 
-        public async Task<IEnumerable<Document>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName)
+        public async Task<QueryResponse> GetUsersRankedMoviesByMovieTitle(int userId, string movieName)
         {
-            var filter = new QueryFilter("UserId", QueryOperator.Equal, userId);
-            filter.AddCondition("MovieName", QueryOperator.BeginsWith, movieName);
+            var request = new QueryRequest
+            {
+                TableName = Constants.TableName,
+                KeyConditionExpression = "UserId = :userId and begins_with (MovieName, :movieName)",
+                ExpressionAttributeValues = new Dictionary<string, AttributeValue>
+                {
+                    {":userId", new AttributeValue{ N = userId.ToString() } },
+                    {":movieName", new AttributeValue { S = movieName } }
+                }
+            };
 
-            return await table.Query(filter).GetRemainingAsync();
+            return await dynamoDBClient.QueryAsync(request);
         }
 
-        public async Task UpdateMovie(Document documentModel)
+        public async Task AddMovie(int userId, MovieRankRequest movieRankRequest)
         {
-            await table.UpdateItemAsync(documentModel);
+            var request = new PutItemRequest
+            {
+                TableName = Constants.TableName,
+                Item = new Dictionary<string, AttributeValue>
+                {
+                    {Constants.UserId_field, new AttributeValue { N = userId.ToString() } },
+                    {Constants.MovieName_field, new AttributeValue{ S = movieRankRequest.movieName } },
+                    {Constants.Description_field, new AttributeValue{ S = movieRankRequest.Description } },
+                    {Constants.Actors_field, new AttributeValue{ SS = movieRankRequest.Actors } },
+                    {Constants.Ranking_field, new AttributeValue{ N = movieRankRequest.Ranking.ToString() } },
+                    {Constants.RankDateTime_field, new AttributeValue { S = DateTime.UtcNow.ToString() } }
+                }
+            };
+            await dynamoDBClient.PutItemAsync(request);
+        }
+
+        public async Task UpdateMovie(int userId, MovieUpdateRequest updateRequest)
+        {
+            var request = new UpdateItemRequest
+            {
+                TableName = Constants.TableName,
+                Key = new Dictionary<string, AttributeValue>
+                {
+                    {Constants.UserId_field, new AttributeValue { N = userId.ToString() } },
+                    {Constants.MovieName_field, new AttributeValue { S = updateRequest.movieName } }
+                },
+                AttributeUpdates = new Dictionary<string, AttributeValueUpdate>
+                {
+                    { Constants.Ranking_field, new AttributeValueUpdate
+                        {
+                            Action = AttributeAction.PUT,
+                            Value = new AttributeValue { N = updateRequest.Ranking.ToString() }
+                        }
+                    },
+                    {
+                        Constants.RankDateTime_field, new AttributeValueUpdate
+                        {
+                            Action = AttributeAction.PUT,
+                            Value = new AttributeValue { S = DateTime.UtcNow.ToString() }
+                        }
+                    }
+                }
+            };
+            await dynamoDBClient.UpdateItemAsync(request);
+        }
+
+        public async Task<QueryResponse> GetMoviesRanking(string movieName)
+        {
+            var request = new QueryRequest
+            {
+                TableName = Constants.TableName,
+                IndexName = Constants.TableIndex,
+                KeyConditionExpression = "MovieName = :movieName",
+                ExpressionAttributeValues = new Dictionary<string, AttributeValue>
+                {
+                    {":movieName", new AttributeValue{S=movieName} }
+                }
+            };
+            return await dynamoDBClient.QueryAsync(request);
         }
     }
 }
