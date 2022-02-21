@@ -1,7 +1,5 @@
-﻿using Amazon.DynamoDBv2.DocumentModel;
-using Amazon.DynamoDBv2.Model;
+﻿using Amazon.DynamoDBv2.Model;
 using MovieRank.Contracts;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MovieRank.Libs.Repositories

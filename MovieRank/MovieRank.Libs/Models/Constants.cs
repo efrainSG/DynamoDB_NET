@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MovieRank.Libs.Models
+﻿namespace MovieRank.Libs.Models
 {
     public abstract class Constants
     {

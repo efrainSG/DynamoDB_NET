@@ -1,6 +1,4 @@
-﻿using MovieRank.Contracts;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace MovieRank.Services
 {

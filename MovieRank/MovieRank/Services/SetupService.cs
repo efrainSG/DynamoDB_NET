@@ -1,9 +1,4 @@
-﻿using MovieRank.Contracts;
-using MovieRank.Libs.Mappers;
-using MovieRank.Libs.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MovieRank.Libs.Repositories;
 using System.Threading.Tasks;
 
 namespace MovieRank.Services
