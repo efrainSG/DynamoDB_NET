@@ -21,5 +21,13 @@ namespace MovieRank.Controllers
 
             return Ok();
         }
+
+        [HttpDelete, Route("deletetable/{dynamoDbTableName}")]
+        public async Task<IActionResult> DeleteTable(string dynamoDbTableName)
+        {
+            await setupService.DeleteDynamoDbTable(dynamoDbTableName);
+
+            return Ok();
+        }
     }
 }

@@ -16,5 +16,10 @@ namespace MovieRank.Services
         {
             await movieRankRepository.CreateDynamoDbTable(dynamoDbtableName);
         }
+
+        public async Task DeleteDynamoDbTable(string dynamoDbTableName)
+        {
+            await movieRankRepository.DeleteDynamoDbTable(dynamoDbTableName);
+        }
     }
 }

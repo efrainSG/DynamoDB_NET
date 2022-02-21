@@ -13,6 +13,7 @@ namespace MovieRank.Libs.Repositories
         Task UpdateMovie(int userId, MovieUpdateRequest updateRequest);
         Task<QueryResponse> GetMoviesRanking(string movieName);
         Task CreateDynamoDbTable(string dynamoDbtableName);
+        Task DeleteDynamoDbTable(string dynamoDbTableName);
     }
 }
  

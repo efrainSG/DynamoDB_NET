@@ -146,5 +146,15 @@ namespace MovieRank.Libs.Repositories
             };
             await dynamoDBClient.CreateTableAsync(request);
         }
+
+        public async Task DeleteDynamoDbTable(string dynamoDbTableName)
+        {
+            var request = new DeleteTableRequest
+            {
+                TableName = dynamoDbTableName
+            };
+
+            await dynamoDBClient.DeleteTableAsync(request);
+        }
     }
 }
