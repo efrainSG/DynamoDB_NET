@@ -14,5 +14,6 @@ namespace MovieRank.Libs.Models
         public const string Actors_field = "Actors";
         public const string UserId_field = "UserId";
         public const string TableIndex = "MovieName-index";
+        public const string RegionName = "us-east-2";
     }
 }

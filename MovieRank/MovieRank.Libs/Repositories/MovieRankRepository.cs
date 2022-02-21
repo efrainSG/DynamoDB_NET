@@ -117,5 +117,35 @@ namespace MovieRank.Libs.Repositories
             };
             return await dynamoDBClient.QueryAsync(request);
         }
+
+        public async Task CreateDynamoDbTable(string dynamoDbtableName)
+        {
+            var request = new CreateTableRequest
+            {
+                TableName = dynamoDbtableName,
+                AttributeDefinitions = new List<AttributeDefinition>
+                {
+                    new AttributeDefinition
+                    {
+                        AttributeName = "Id",
+                        AttributeType = "N"
+                    }
+                },
+                KeySchema = new List<KeySchemaElement>
+                {
+                    new KeySchemaElement
+                    {
+                        AttributeName = "Id",
+                        KeyType = "HASH"
+                    }
+                },
+                ProvisionedThroughput = new ProvisionedThroughput
+                {
+                    ReadCapacityUnits = 1,
+                    WriteCapacityUnits = 1
+                }
+            };
+            await dynamoDBClient.CreateTableAsync(request);
+        }
     }
 }

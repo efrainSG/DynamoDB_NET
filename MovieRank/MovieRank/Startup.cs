@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MovieRank.Libs.Mappers;
+using MovieRank.Libs.Models;
 using MovieRank.Libs.Repositories;
 using MovieRank.Services;
 
@@ -28,11 +29,12 @@ namespace MovieRank
             services.AddSingleton<IMovieRankService, MovieRankService>();
             services.AddSingleton<IMovieRankRepository, MovieRankRepository>();
             services.AddSingleton<IMapper, Mapper>();
+            services.AddSingleton<ISetupService, SetupService>();
 
             services.AddDefaultAWSOptions(
                 new AWSOptions
                 {
-                    Region = Amazon.RegionEndpoint.GetBySystemName("us-east-2")
+                    Region = Amazon.RegionEndpoint.GetBySystemName(Constants.RegionName)
                 }
                 );
         }
