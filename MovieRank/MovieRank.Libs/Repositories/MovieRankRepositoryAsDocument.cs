@@ -12,7 +12,7 @@ namespace MovieRank.Libs.Repositories
 
         public MovieRankRepositoryAsDocument(IAmazonDynamoDB dynamoDbClient)
         {
-            table = Table.LoadTable(dynamoDbClient, Constants.TableName);
+            table = Table.LoadTable(dynamoDbClient, Constants.ToEnumString(Constants.tableNames.MovieRanking001));
         }
 
         public async Task AddMovie(Document documentModel)
@@ -34,10 +34,10 @@ namespace MovieRank.Libs.Repositories
 
         public async Task<IEnumerable<Document>> GetMoviesRanking(string movieName)
         {
-            var filter = new QueryFilter(Constants.MovieName_field, QueryOperator.Equal, movieName);
+            var filter = new QueryFilter(Constants.ToEnumString(Constants.fieldNames.MovieName), QueryOperator.Equal, movieName);
             var config = new QueryOperationConfig()
             {
-                IndexName = Models.Constants.TableIndex,
+                IndexName = Constants.ToEnumString(Constants.tableIndexes.MovieName_index),
                 Filter = filter
             };
             return await table.Query(config).GetRemainingAsync();
@@ -45,8 +45,8 @@ namespace MovieRank.Libs.Repositories
 
         public async Task<IEnumerable<Document>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName)
         {
-            var filter = new QueryFilter(Constants.UserId_field, QueryOperator.Equal, userId);
-            filter.AddCondition(Constants.MovieName_field, QueryOperator.BeginsWith, movieName);
+            var filter = new QueryFilter(Constants.ToEnumString(Constants.fieldNames.UserId), QueryOperator.Equal, userId);
+            filter.AddCondition(Constants.ToEnumString(Constants.fieldNames.MovieName), QueryOperator.BeginsWith, movieName);
 
             return await table.Query(filter).GetRemainingAsync();
         }

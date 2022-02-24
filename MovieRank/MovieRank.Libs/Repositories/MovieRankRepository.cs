@@ -19,7 +19,7 @@ namespace MovieRank.Libs.Repositories
 
         public async Task<ScanResponse> GetAllItems()
         {
-            var scanRequest = new ScanRequest(Models.Constants.TableName);
+            var scanRequest = new ScanRequest(Constants.ToEnumString(Constants.tableNames.MovieRanking001));
             return await dynamoDBClient.ScanAsync(scanRequest);
         }
 
@@ -27,11 +27,11 @@ namespace MovieRank.Libs.Repositories
         {
             var request = new GetItemRequest
             {
-                TableName = Constants.TableName,
+                TableName = Constants.ToEnumString(Constants.tableNames.MovieRanking001),
                 Key = new Dictionary<string, AttributeValue>
                 {
-                    {Constants.UserId_field, new AttributeValue {N = userId.ToString() } },
-                    {Constants.MovieName_field, new AttributeValue{S = movieName} }
+                    {Constants.ToEnumString(Constants.fieldNames.UserId), new AttributeValue {N = userId.ToString() } },
+                    {Constants.ToEnumString(Constants.fieldNames.MovieName), new AttributeValue{S = movieName} }
                 }
             };
 
@@ -42,7 +42,7 @@ namespace MovieRank.Libs.Repositories
         {
             var request = new QueryRequest
             {
-                TableName = Constants.TableName,
+                TableName = Constants.ToEnumString(Constants.tableNames.MovieRanking001),
                 KeyConditionExpression = "UserId = :userId and begins_with (MovieName, :movieName)",
                 ExpressionAttributeValues = new Dictionary<string, AttributeValue>
                 {
@@ -58,15 +58,15 @@ namespace MovieRank.Libs.Repositories
         {
             var request = new PutItemRequest
             {
-                TableName = Constants.TableName,
+                TableName = Constants.ToEnumString(Constants.tableNames.MovieRanking001),
                 Item = new Dictionary<string, AttributeValue>
                 {
-                    {Constants.UserId_field, new AttributeValue { N = userId.ToString() } },
-                    {Constants.MovieName_field, new AttributeValue{ S = movieRankRequest.movieName } },
-                    {Constants.Description_field, new AttributeValue{ S = movieRankRequest.Description } },
-                    {Constants.Actors_field, new AttributeValue{ SS = movieRankRequest.Actors } },
-                    {Constants.Ranking_field, new AttributeValue{ N = movieRankRequest.Ranking.ToString() } },
-                    {Constants.RankDateTime_field, new AttributeValue { S = DateTime.UtcNow.ToString() } }
+                    {Constants.ToEnumString(Constants.fieldNames.UserId), new AttributeValue { N = userId.ToString() } },
+                    {Constants.ToEnumString(Constants.fieldNames.MovieName), new AttributeValue{ S = movieRankRequest.movieName } },
+                    {Constants.ToEnumString(Constants.fieldNames.Description), new AttributeValue{ S = movieRankRequest.Description } },
+                    {Constants.ToEnumString(Constants.fieldNames.Actors), new AttributeValue{ SS = movieRankRequest.Actors } },
+                    {Constants.ToEnumString(Constants.fieldNames.Ranking), new AttributeValue{ N = movieRankRequest.Ranking.ToString() } },
+                    {Constants.ToEnumString(Constants.fieldNames.RankDateTime), new AttributeValue { S = DateTime.UtcNow.ToString() } }
                 }
             };
             await dynamoDBClient.PutItemAsync(request);
@@ -76,22 +76,22 @@ namespace MovieRank.Libs.Repositories
         {
             var request = new UpdateItemRequest
             {
-                TableName = Constants.TableName,
+                TableName = Constants.ToEnumString(Constants.tableNames.MovieRanking001),
                 Key = new Dictionary<string, AttributeValue>
                 {
-                    {Constants.UserId_field, new AttributeValue { N = userId.ToString() } },
-                    {Constants.MovieName_field, new AttributeValue { S = updateRequest.movieName } }
+                    {Constants.ToEnumString(Constants.fieldNames.UserId), new AttributeValue { N = userId.ToString() } },
+                    {Constants.ToEnumString(Constants.fieldNames.MovieName), new AttributeValue { S = updateRequest.movieName } }
                 },
                 AttributeUpdates = new Dictionary<string, AttributeValueUpdate>
                 {
-                    { Constants.Ranking_field, new AttributeValueUpdate
+                    { Constants.ToEnumString(Constants.fieldNames.Ranking), new AttributeValueUpdate
                         {
                             Action = AttributeAction.PUT,
                             Value = new AttributeValue { N = updateRequest.Ranking.ToString() }
                         }
                     },
                     {
-                        Constants.RankDateTime_field, new AttributeValueUpdate
+                        Constants.ToEnumString(Constants.fieldNames.RankDateTime), new AttributeValueUpdate
                         {
                             Action = AttributeAction.PUT,
                             Value = new AttributeValue { S = DateTime.UtcNow.ToString() }
@@ -106,8 +106,8 @@ namespace MovieRank.Libs.Repositories
         {
             var request = new QueryRequest
             {
-                TableName = Constants.TableName,
-                IndexName = Constants.TableIndex,
+                TableName = Constants.ToEnumString(Constants.tableNames.MovieRanking001),
+                IndexName = Constants.ToEnumString(Constants.tableIndexes.MovieName_index),
                 KeyConditionExpression = "MovieName = :movieName",
                 ExpressionAttributeValues = new Dictionary<string, AttributeValue>
                 {

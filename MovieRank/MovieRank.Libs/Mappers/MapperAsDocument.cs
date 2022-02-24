@@ -13,12 +13,12 @@ namespace MovieRank.Libs.Mappers
         {
             return new Document
             {
-                [Constants.UserId_field] = userId,
-                [Constants.MovieName_field] = movieRankRequest.movieName,
-                [Constants.Description_field] = movieRankRequest.Description,
-                [Constants.RankDateTime_field] = DateTime.UtcNow.ToString(),
-                [Constants.Actors_field] = movieRankRequest.Actors,
-                [Constants.Ranking_field] = movieRankRequest.Ranking
+                [Constants.ToEnumString(Constants.fieldNames.UserId)] = userId,
+                [Constants.ToEnumString(Constants.fieldNames.MovieName)] = movieRankRequest.movieName,
+                [Constants.ToEnumString(Constants.fieldNames.Description)] = movieRankRequest.Description,
+                [Constants.ToEnumString(Constants.fieldNames.RankDateTime)] = DateTime.UtcNow.ToString(),
+                [Constants.ToEnumString(Constants.fieldNames.Actors)] = movieRankRequest.Actors,
+                [Constants.ToEnumString(Constants.fieldNames.Ranking)] = movieRankRequest.Ranking
             };
         }
 
@@ -26,12 +26,12 @@ namespace MovieRank.Libs.Mappers
         {
             return new Document
             {
-                [Constants.UserId_field] = userId,
-                [Constants.MovieName_field] = movieResponse.MovieName,
-                [Constants.Description_field] = movieResponse.Description,
-                [Constants.RankDateTime_field] = DateTime.UtcNow.ToString(),
-                [Constants.Actors_field] = movieResponse.Actors,
-                [Constants.Ranking_field] = movieRankRequest.Ranking
+                [Constants.ToEnumString(Constants.fieldNames.UserId)] = userId,
+                [Constants.ToEnumString(Constants.fieldNames.MovieName)] = movieResponse.MovieName,
+                [Constants.ToEnumString(Constants.fieldNames.Description)] = movieResponse.Description,
+                [Constants.ToEnumString(Constants.fieldNames.RankDateTime)] = DateTime.UtcNow.ToString(),
+                [Constants.ToEnumString(Constants.fieldNames.Actors)] = movieResponse.Actors,
+                [Constants.ToEnumString(Constants.fieldNames.Ranking)] = movieRankRequest.Ranking
             };
         }
 
@@ -45,7 +45,7 @@ namespace MovieRank.Libs.Mappers
             string description;
             try
             {
-                description = item[Constants.Description_field];
+                description = item[Constants.ToEnumString(Constants.fieldNames.Description)];
             }
             catch
             {
@@ -55,7 +55,7 @@ namespace MovieRank.Libs.Mappers
             string RankDateTime;
             try
             {
-                RankDateTime = item[Constants.RankDateTime_field];
+                RankDateTime = item[Constants.ToEnumString(Constants.fieldNames.RankDateTime)];
             }
             catch
             {
@@ -64,10 +64,10 @@ namespace MovieRank.Libs.Mappers
 
             return new MovieResponse
             {
-                MovieName = item[Constants.MovieName_field],
+                MovieName = item[Constants.ToEnumString(Constants.fieldNames.MovieName)],
                 Description = description,
-                Actors = item[Constants.Actors_field].AsListOfString(),
-                Ranking = Convert.ToInt32(item[Constants.Ranking_field]),
+                Actors = item[Constants.ToEnumString(Constants.fieldNames.Actors)].AsListOfString(),
+                Ranking = Convert.ToInt32(item[Constants.ToEnumString(Constants.fieldNames.Ranking)]),
                 TimeRanked = RankDateTime
             };
         }

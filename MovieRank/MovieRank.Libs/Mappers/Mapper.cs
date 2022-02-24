@@ -18,11 +18,11 @@ namespace MovieRank.Libs.Mappers
         {
             return new MovieResponse
             {
-                MovieName = response.Item[Constants.MovieName_field].S,
-                Description = response.Item[Constants.Description_field].S,
-                Actors = response.Item[Constants.Actors_field].SS,
-                Ranking = Convert.ToInt32(response.Item[Constants.Ranking_field].N),
-                TimeRanked = response.Item[Constants.RankDateTime_field].S
+                MovieName = response.Item[Constants.ToEnumString(Constants.fieldNames.MovieName)].S,
+                Description = response.Item[Constants.ToEnumString(Constants.fieldNames.Description)].S,
+                Actors = response.Item[Constants.ToEnumString(Constants.fieldNames.Actors)].SS,
+                Ranking = Convert.ToInt32(response.Item[Constants.ToEnumString(Constants.fieldNames.Ranking)].N),
+                TimeRanked = response.Item[Constants.ToEnumString(Constants.fieldNames.RankDateTime)].S
             };
         }
 
@@ -35,11 +35,11 @@ namespace MovieRank.Libs.Mappers
         {
             return new MovieResponse
             {
-                MovieName = item[Constants.MovieName_field].S,
-                Description = item[Constants.Description_field].S,
-                Actors = item[Constants.Actors_field].SS,
-                Ranking = Convert.ToInt32(item[Constants.Ranking_field].N),
-                TimeRanked = item[Constants.RankDateTime_field].S
+                MovieName = item[Constants.ToEnumString(Constants.fieldNames.MovieName)].S,
+                Description = item[Constants.ToEnumString(Constants.fieldNames.Description)].S,
+                Actors = item[Constants.ToEnumString(Constants.fieldNames.Actors)].SS,
+                Ranking = Convert.ToInt32(item[Constants.ToEnumString(Constants.fieldNames.Ranking)].N),
+                TimeRanked = item[Constants.ToEnumString(Constants.fieldNames.RankDateTime)].S
             };
         }
     }
