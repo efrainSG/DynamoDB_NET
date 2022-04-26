@@ -43,3 +43,9 @@
 /MovieRank/MovieRank/bin/Debug/netcoreapp3.1/appsettings.json
 /MovieRank/MovieRank/bin/Debug/netcoreapp3.1/appsettings.Development.json
 /MovieRank/MovieRanling.Integration.Tests/obj
+/MovieRank/MovieRank.Integration.Tests/obj
+/MovieRank/.editorconfig
+
+MovieRank/MovieRank.Integration.Tests/bin/
+
+MovieRank/.vs/

@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieRank.Contracts", "Movi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{291BAF4E-52F7-4E91-854A-31D07458DBC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieRanling.Integration.Tests", "MovieRanling.Integration.Tests\MovieRanling.Integration.Tests.csproj", "{1B11AE92-1397-4699-9976-600AEF687608}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieRank.Integration.Tests", "MovieRank.Integration.Tests\MovieRank.Integration.Tests.csproj", "{48B5E581-F418-4CFE-B671-C1C4936F5AD4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E9BD0232-1CFA-40DC-A253-EE84D2646527}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,16 +36,16 @@ Global
 		{13256BDD-99A1-4FD5-9BC4-BE40DCF90B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13256BDD-99A1-4FD5-9BC4-BE40DCF90B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13256BDD-99A1-4FD5-9BC4-BE40DCF90B61}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B11AE92-1397-4699-9976-600AEF687608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B11AE92-1397-4699-9976-600AEF687608}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B11AE92-1397-4699-9976-600AEF687608}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B11AE92-1397-4699-9976-600AEF687608}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48B5E581-F418-4CFE-B671-C1C4936F5AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48B5E581-F418-4CFE-B671-C1C4936F5AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48B5E581-F418-4CFE-B671-C1C4936F5AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48B5E581-F418-4CFE-B671-C1C4936F5AD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{1B11AE92-1397-4699-9976-600AEF687608} = {291BAF4E-52F7-4E91-854A-31D07458DBC4}
+		{48B5E581-F418-4CFE-B671-C1C4936F5AD4} = {291BAF4E-52F7-4E91-854A-31D07458DBC4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC511A4F-87B3-4CB2-A3AC-4EFE6B9B65EB}
